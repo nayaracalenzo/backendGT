@@ -2,12 +2,13 @@ const client = require('../../db');
 
 const router = require('express').Router();
 
+//listar itens
 router.get('/:id/itens', async (req, res) => {
-   const {id} = req.params
+//    const {id} = req.params
    try {
-    await client.query(
+    const result = await client.query(
         'SELECT * FROM cart_item WHERE cart_id = $1',
-         [id]
+         [req.params.id]
     )
     res.status(200).json(result.rows)
    } catch (error) {
@@ -15,6 +16,7 @@ router.get('/:id/itens', async (req, res) => {
         res.status(500).json({error: 'Erro ao buscar itens'})
    }  
  })
+//cria carrinho
 router.post('/', async (req, res) => {
     const {user_id} = req.body 
     try {
@@ -28,14 +30,22 @@ router.post('/', async (req, res) => {
         res.status(500).json({erro: "Erro ao criar carrinho", details: error.message })
     }
  })
+
+ //insere itens no carrinho
 router.post('/item', async (req, res) => {
     const {cart_id, product_id, quantity} = req.body
 
-    if (!cart_id || !product_id || !quantity) {
+    if (!Number.isInteger(cart_id) || !Number.isInteger(product_id) || !Number.isInteger(quantity)) {
         return res.status(400).json({error: "Erro no corpo da requisição"})
     }
      
     try {
+
+        const carrinhoCheck = await client.query('SELECT id FROM cart WHERE id = $1', [cart_id])
+        if (carrinhoCheck.rowCount === 0) {
+            return res.status(404).json({ error: 'Carrinho não encontrado'})
+        }
+
         await client.query(
             `INSERT INTO cart_item (cart_id, product_id, quantity)
              VALUES ($1, $2, $3)`, [cart_id, product_id, quantity]
