@@ -46,11 +46,11 @@ router.post('/item', async (req, res) => {
             return res.status(404).json({ error: 'Carrinho não encontrado'})
         }
 
-        await client.query(
+        const result = await client.query(
             `INSERT INTO cart_item (cart_id, product_id, quantity)
-             VALUES ($1, $2, $3)`, [cart_id, product_id, quantity]
+             VALUES ($1, $2, $3) RETURNING *`, [cart_id, product_id, quantity]
         )
-        res.status(201).json({message: 'Item adicionado com sucesso'})
+        res.status(201).json(result.rows)
     } catch (error) {
         console.log("Erro ao inserir item no carrinho", error)
         res.status(500).json({erro: "Erro ao adicionar item",
@@ -58,8 +58,30 @@ router.post('/item', async (req, res) => {
     }
    
  })
-router.put('/item/:id', (req, res) => {
-    res.send('Alterar a quantidade item carrinho') 
+//Alterar a quantidade item carrinho
+router.put('/item/:id', async (req, res) => {
+    const {id} = req.params
+    const {quantity} = req.body
+
+    if (!Number.isInteger(quantity) || quantity < 1) {
+        return res.status(400).json({ error: "quantidade inválida. Deve ser número inteiro maior que 0"})
+    }
+
+    try {
+        const result = await client.query(
+            'UPDATE cart_item SET quantity = $1 WHERE id = $2 RETURNING *',
+            [quantity, id]
+        )
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Item não encontrado para alterar'})
+        }
+        res.status(200).json(result.rows[0])
+    } catch (error) {
+        console.log("Erro ao alterar item", error)
+        res.status(500).json({erro: "Erro ao alterar item",
+        details: error.message })
+    }
  })
 router.delete('/item/:id', (req, res) => {
     res.send('Deletar item carrinho') 
