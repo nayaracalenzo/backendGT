@@ -10,11 +10,11 @@ router.post('/item', async (req, res) => {
 
  //Alterar a quantidade item carrinho
 router.put('/item/:id', async (req, res) => {
-   
+    res.send(await alterarItens(req.params.id, req.body)) 
 })
 
 //deleta item
 router.delete('/item/:id', async (req, res) => {
-   
+    res.send(await deletarItens(req.params.id)) 
 })
 
