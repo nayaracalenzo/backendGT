@@ -1,20 +1,13 @@
 const { listarItens, criarCarrinho, deletarCarrinho } = require('../controllers/cartController');
-
 const router = require('express').Router();
 
 //listar carrinho itens
-router.get('/:id/itens', async (req, res) => {
-    res.send(await listarItens(req.params.id)) 
-})
+router.get('/:id/itens',listarItens)
 
 //cria carrinho
-router.post('/', async (req, res) => {
-    res.send(await criarCarrinho(req.body))
- })
+router.post('/', criarCarrinho)
 
 //Deleta todos os itens do carrinho
-router.delete('/:id/itens', async (req, res) => {
-    res.send(await deletarCarrinho(req.params.id))
- })
+router.delete('/:id/itens', deletarCarrinho)
 
 module.exports = router;

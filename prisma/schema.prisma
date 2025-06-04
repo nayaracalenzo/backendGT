@@ -28,6 +28,7 @@ model CartItem {
   cart Cart @relation(fields: [cart_id], references: [id], onDelete: Cascade)
 }
 
+
          
          
          
