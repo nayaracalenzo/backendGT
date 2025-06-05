@@ -12,3 +12,4 @@ router.put('/item/:id', alterarItens)
 router.delete('/item/:id', deletarItens) 
 
 
+module.exports = router
