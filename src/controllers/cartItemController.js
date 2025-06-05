@@ -1,3 +1,5 @@
+const {inserirItensService, alterarItensService, deletarItensService} = require('../services/cartItemService')
+
 
 async function inserirItens() {
     const {cart_id, product_id, quantity} = req.body
@@ -30,14 +32,17 @@ async function alterarItens() {
 async function deletarItens() {
     const {id} = req.params
     try {
-        const result = await client.query('DELETE FROM cart_item WHERE id = $1 RETURNING *',
-             [id])
-        
-        res.status(200).json({mensage: "Item deletado com sucesso", result: result.rows})     
+        const result = await deletarItensService(id)
+        res.status(200).json({
+            mensage: "Item deletado com sucesso",
+            result
+            })     
     } catch (error) {
         console.log("Erro ao deletar item", error)
-        res.status(500).json({erro: "Erro ao deletar item",
-        details: error.message })
+        res.status(error.status || 500).json(
+            {erro: error.message,
+            details: error.details || null
+        })
     }
 }
 

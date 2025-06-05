@@ -1,8 +1,12 @@
 const express = require('express');
 const cartRoute = require('./src/routes/cartRoute.js')
+const cartItemRoute = require('./src/routes/cartItemRoute.js')
+
+require('dotenv').config()
+
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 app.use(express.json())
 
@@ -14,7 +18,8 @@ app.get('/boas-vindas', (req, res) => {
    res.send('Seja bem-vindo') 
 })
 
-app.use('/carrinho', cartRoute)
+app.use('/v1', cartRoute)
+app.use('/v2', cartItemRoute)
 
 app.listen(port, () => {
     console.log(`Servidor rodando na url http://localhost:${port}`)
