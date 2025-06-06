@@ -18,8 +18,8 @@ app.get('/boas-vindas', (req, res) => {
    res.send('Seja bem-vindo') 
 })
 
-app.use('/v1', cartRoute)
-app.use('/v2', cartItemRoute)
+app.use('/v1/cart', cartRoute)
+app.use('/v1/item', cartItemRoute)
 
 app.listen(port, () => {
     console.log(`Servidor rodando na url http://localhost:${port}`)
