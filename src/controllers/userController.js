@@ -1,4 +1,4 @@
-
+const {registrarUsuario, loginUsuario} = require('../services/userService.js')
 
 async function registrar(req, res) {
     const {firstname, surname, email, password} = req.body
