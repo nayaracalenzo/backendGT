@@ -14,7 +14,7 @@ async function inserirItensService(cart_id, product_id, quantity) {
             error.status = 400;
             throw error;
     }
-    return await inserirItensRepository({cart_id, product_id, quantity})
+    return await inserirItensRepository(cart_id, product_id, quantity)
 }
 
 async function alterarItensService(id, quantity) {

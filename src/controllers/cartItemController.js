@@ -3,6 +3,8 @@ const {inserirItensService, alterarItensService, deletarItensService} = require(
 
 async function inserirItens(req, res) {
     const {cart_id, product_id, quantity} = req.body
+    // console.log("REQ.BODY:", req.body);
+    // console.log("Valores extraídos:", { cart_id, product_id, quantity });
     try {
         const result = await inserirItensService(cart_id, product_id, quantity)
         res.status(201).json(result)
