@@ -2,14 +2,14 @@
 const { listarCarrinhoRepository, criarCarrinhoRepository, limparCarrinhoRepository } = require("../repositories/cartRepository");
 
 
-async function listarCarrinhoService(cart_id) {
-    return await listarCarrinhoRepository(cart_id)
+async function listarCarrinhoService(cart_id, user) {
+    return await listarCarrinhoRepository(cart_id, user)
 }
-async function criarCarrinhoService(user_id) {
-    return await criarCarrinhoRepository(user_id)
+async function criarCarrinhoService(user) {
+    return await criarCarrinhoRepository(user)
 }
-async function limparCarrinhoService(cart_id) {
-    return await limparCarrinhoRepository(cart_id)
+async function limparCarrinhoService(cart_id, user) {
+    return await limparCarrinhoRepository(cart_id, user)
 }
 
 module.exports = {

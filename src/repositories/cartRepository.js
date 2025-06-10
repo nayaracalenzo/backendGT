@@ -8,21 +8,31 @@ function cartCheck(cart_id) {
     })
 }
 
-function listarCarrinhoItensRepository(cart_id) {
+function listarCarrinhoItensRepository(cart_id, user) {
     return prisma.cartItem.findMany({
-            where: {id: Number(cart_id)}
+            where: {
+                cart: {
+                  id: Number(cart_id),
+                  user_id: user
+                }
+            }
     })
 }
 
-function criarCarrinhoRepository(user_id) {
+function criarCarrinhoRepository(user) {
     return prisma.cart.create({
-        data: {user_id}
+        data: {user_id: user}
     })
 }
 
- function limparCarrinhoRepository(cart_id) {
-    return prisma.cartItem.delete({
-        where: {id: Number(cart_id)}
+ function limparCarrinhoRepository(cart_id, user) {
+    return prisma.cartItem.deleteMany({
+        where: {
+            cart: {
+              id: Number(cart_id),
+              user_id: user
+            }
+        }
     })
 }
 
