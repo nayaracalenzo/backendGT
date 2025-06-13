@@ -12,7 +12,7 @@ const port = process.env.PORT;
 
 app.use(
   cors({
-    origin: "https://projeto-gt-sprint2.vercel.app/",
+    origin: "https://projeto-gt-sprint2.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-type", "Authorization"],
   })
