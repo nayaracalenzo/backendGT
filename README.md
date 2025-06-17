@@ -8,7 +8,7 @@ Routes/
 
 - [ ] cada entidade possui seu arquivo de rota
 - [ ] importação da camada de controllers o início do arquivo
-- [ ] routes recebe o express.Routes()
+- [ ] routes recebe o express.Router()
 - [ ] para cada endpoint chamar o método específico com a rota e a chamada da função de controller
 
 Controllers/
